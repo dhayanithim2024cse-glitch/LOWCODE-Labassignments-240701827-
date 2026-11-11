@@ -1,0 +1,725 @@
+/*
+ * Author       : dhayanithi.m.2024.cse_raj
+ * Generated on : 11-Nov-2026 13:55:28
+ * Version      : 1.0
+ */
+ application "Loan application"
+ {
+ 	date format = "dd-MMM-yyyy"
+ 	time zone = "Asia/Kolkata"
+ 	time format = "24-hr"
+
+ 	forms
+	{
+		form Loan_application
+		{
+			displayname = "Loan application"
+			success message = "Data Added Successfully!"
+			Section
+			(
+				type = section
+	 			row = 1
+	 			column = 0   
+				width = medium
+			)
+			must have Has_Existing_Loan_With_Bank
+			(
+    			type = checkbox
+				initial value = false
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have Loan_Terms_Display
+			(
+    			type = richtext
+				height = 200px
+				toolbar = enable
+				[
+					style, font-color, background-color, link, bullets-and-numbering, 
+					font-size : {1, 2, 3, 4, 5, 6, 7}
+				]
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have Property_Listing_URL
+			(
+    			type = url
+				enable  linkname
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have Applicant_Photo
+			(
+    			type = image
+				source  = file
+				aspect ratio = original
+				camera = primary
+				show gallery = true
+				switch camera = true
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have Interest_Rate_Offered
+			(
+    			type = percentage
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have Loan_Amount_Requested
+			(
+				type = INR
+				format = commadotindian
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have Debt_To_Income_Ratio
+			(
+				type = decimal
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have Application_Submitted_On
+			(
+    			type = datetime
+				timedisplayoptions = "hh:mm:ss"
+				alloweddays = 0,1,2,3,4,5,6
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have Servicing_Branch_Lookup
+			(
+				type = picklist	
+				values  = Loan_application.ID
+    			displayformat = [Application_Submitted_On]
+				advanced field search = true
+				sortorder = ascending
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have Applicant_Digital_Signature
+			(
+    			type = signature
+	 			row = 1
+	 			column = 1   
+				width = medium
+				personal data = true
+			)
+			must have Income_Proof_Upload
+			(
+    			type = upload file
+    			file count = 10
+				browse = local_drive
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have Loan_Purpose_Voice_Note
+			(
+     			type = audio
+    			duration=60
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Property_Video_Walkthrough
+			(
+    			type = video
+    			duration=30
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Property_Video_Walkthrough1
+			(
+    			type = autonumber
+				displayname = "Property_Video_Walkthrough"
+				start index = 3
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			QR_Code
+			(
+				type = qrcode
+				displayname = "Application_Tracking_QR_Code"
+				value = "${Servicing_Branch_Lookup}"
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Co_Applicant_Details
+			(
+				type = grid
+				Name
+				(
+    				type = name
+     				prefix
+     				(
+	     				 type = prefix
+	     				 displayname ="Prefix"
+	     				 visibility = false
+	     				 value = {"Mr.","Mrs.","Ms."}
+     				) 
+     				first_name
+     				(
+	     				 type = first_name
+	     				 displayname ="First Name"
+     				) 
+     				last_name
+     				(
+	     				 type = last_name
+	     				 displayname ="Last Name"
+     				) 
+     				suffix
+     				(
+	     				 type = suffix
+	     				 displayname ="Suffix"
+	     				 visibility = false
+     				) 
+					width = medium
+					personal data = true
+				)
+				Address
+				(
+    				type = address
+     				capture_coordinates = true
+     				adjust_using_map = false
+     				address_line_1
+     				(
+	     				  type = address_line_1
+	     				  displayname = "Address Line 1"
+     				) 
+     				address_line_2
+     				(
+	     				  type = address_line_2
+	     				  displayname = "Address Line 2"
+     				) 
+     				district_city
+     				(
+	     				  type = district_city
+	     				  displayname = "City / District"
+     				) 
+     				state_province
+     				(
+	     				  type = state_province
+	     				  displayname = "State / Province"
+     				) 
+     				postal_Code
+     				(
+	     				  type = postal_Code
+	     				  displayname = "Postal Code"
+     				) 
+     				country
+     				(
+	     				  type = country
+	     				  displayname = "Country"
+     				) 
+     				latitude
+     				(
+	     				  type = latitude
+	     				  displayname = "latitude"
+	     				 visibility = false
+     				) 
+     				longitude
+     				(
+	     				  type = longitude
+	     				  displayname = "longitude"
+	     				 visibility = false
+     				) 
+					width = medium
+					personal data = true
+				)
+				Email
+				(
+    				type = email
+					maxchar = 80
+					width = medium
+					personal data = true
+				)
+	 			row = 2
+	 			column = 1   
+				width = medium
+			)
+	
+			actions
+			{
+				on add
+				{
+					submit
+					(
+   						type = submit
+   						displayname = "Submit"
+					)
+				}
+				on edit
+				{
+					update
+					(
+   						type = submit
+   						displayname = "Update"
+					)
+					cancel
+					(
+   						type = cancel
+   						displayname = "Cancel"
+					)
+				}
+			}
+			blueprint components
+			{
+				stages = {"submitted","document","veriffication","credit check","approval"}
+			}
+		}
+	}
+	reports
+	{
+		default list Loan_application_Report
+		{
+			displayName = "Loan application Report"
+			show all rows from Loan_application    
+			(
+				Has_Existing_Loan_With_Bank
+				Loan_Terms_Display
+				Property_Listing_URL
+				Interest_Rate_Offered
+				Applicant_Photo
+				Loan_Amount_Requested
+				Debt_To_Income_Ratio
+				Application_Submitted_On
+				Co_Applicant_Details.Address as "Co_Applicant_Details"
+				Servicing_Branch_Lookup
+				Applicant_Digital_Signature
+				Income_Proof_Upload
+				Loan_Purpose_Voice_Note
+				Property_Video_Walkthrough
+				Property_Video_Walkthrough1 as "Property_Video_Walkthrough"
+				QR_Code as "Application_Tracking_QR_Code"
+			)
+		}
+	}
+
+
+		 functions
+		 {
+			 Deluge
+			 {
+				 void loan_application.generate_sanction_letter()
+                 {
+                 }
+			 }
+		 }
+
+
+		workflow
+		{
+		form
+		{
+			Notify_customer as "Notify customer"
+			{
+				type =  form
+				form = Loan_application
+
+				record event = on add
+
+				on success
+				{
+					actions 
+					{
+						sendmail
+						(
+							from : "zoho.adminuserid"
+							to : "dhayanithi.m.2024.cse@rajalakshmi.edu.in"
+							subject : "bank loan application"
+							message : "<div>The Loan Application Form and its supporting pages and reports capture and display data well,human: sending application <br></div><div><br></div><div>acknowledgements, chasing applicants for pending KYC or income documents, escalating high.&nbsp;<br></div>"
+							content type : Plain Text
+						)
+					}
+				}
+
+			}
+		}
+
+		schedule
+		{
+			daily_workflow as "daily workflow"
+			{
+				type =  schedule
+					status = inactive
+				start = "2026-01-22 11:11:25"
+				frequency = daily
+				time zone = "Asia/Kolkata"
+				on start
+				{
+				}
+			}
+			Daily_pending_document_re as "Daily pending document reminder schedule"
+			{
+				type =  schedule
+					status = inactive
+				start = "2026-01-22 05:21:10"
+				frequency = daily
+				time zone = "Asia/Kolkata"
+				on start
+				{
+				}
+			}
+		}
+
+		approval
+		{
+			high_value_loan_approval as "high value loan approval"
+			{
+				type =  approval
+				form = Loan_application
+				display fields = [Has_Existing_Loan_With_Bank,Loan_Terms_Display,Property_Listing_URL,Interest_Rate_Offered,Loan_Amount_Requested,Debt_To_Income_Ratio,Application_Submitted_On]
+				on start
+				{
+				}
+			}
+		}
+
+		blueprint
+		{
+    			loan_lifecycle_blueprint_ as "loan lifecycle blueprint "
+    			{
+        			type = Blueprint
+        			form = Loan_application
+        			start
+        			{
+            			start stage = "submitted"
+            			chart data
+            			{
+                			from port : B
+                			to port   : T3
+                			position  : "0 0"
+                			path      : [27.849999999999994,36.84,27.849999999999994,46.84,27.849999999999994,48.42,27.85,48.42,27.85,50,27.85,60]
+            			}
+        			}
+        			stages
+        			{
+           			"submitted"
+           			{
+               			chart data
+               			{
+                   			position : "-15.223052470852995 60"
+               			}
+           			}
+        			}
+        			transitions
+        			{
+        			}
+    			}
+		}
+
+		batchworkflow
+		{
+			bulk_emi_reminder_batch
+			{
+    			display name = "bulk emi reminder batch"
+    			type = batchworkflow
+    			form = Loan_application
+    			event = "On Schedule"
+    			start = "22-Jan-2026 05:21:10"
+    			frequency = daily
+    			batch size = 100
+    			status = active
+			}
+		}
+
+	}
+	share_settings
+	{
+			"Read"
+			{
+				name = "Read"
+				type = Users_Permissions
+				permissions = {Chat:true, Predefined:true, ApiAccess:true, PIIAccess:true, ePHIAccess:true}
+				description = "This profile will have read permission for all components\n"
+			}
+			"Write"
+			{
+				name = "Write"
+				type = Users_Permissions
+				permissions = {Chat:true, Predefined:true, ApiAccess:true, PIIAccess:true, ePHIAccess:true}
+				description = "This profile will have write permission for all components\n"
+			}
+			"Developer"
+			{
+				name = "Developer"
+				type = Developer
+				permissions = {Chat:false, Predefined:true, ApiAccess:true, PIIAccess:true, ePHIAccess:true}
+				description = "Developer Profile\n"
+			}
+			"Administrator"
+			{
+				name = "Administrator"
+				type = Users_Permissions
+				permissions = {Chat:true, Predefined:true, ApiAccess:true, PIIAccess:true, ePHIAccess:true}
+				description = "This profile will have all the permissions.\n"
+			}
+			"Customer"
+			{
+				name = "Customer"
+				type = Customer_Portal
+				permissions = {Chat:true, Predefined:true, ApiAccess:true, PIIAccess:true, ePHIAccess:true}
+				description = "This is the default profile having only add and view permission.\n"
+			}
+			roles
+			{
+				"CEO"
+				{
+					description = "User belonging to this role can access data of all other users."
+				}
+			}
+	}
+
+
+	web
+	{
+		forms
+		{
+			form Loan_application
+			{
+				label placement = left
+			}
+		}
+		reports
+		{
+			report Loan_application_Report
+			{
+				quickview
+				(
+					layout
+					(
+						displaylayout = "classic"
+						datablock1
+						(
+							fields
+							(
+								Has_Existing_Loan_With_Bank
+								Loan_Terms_Display
+								Property_Listing_URL
+								Interest_Rate_Offered
+								Applicant_Photo
+								Loan_Amount_Requested
+								Debt_To_Income_Ratio
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						record
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+    					)
+						)
+    				action
+    				(
+						on click
+						(
+							View Record   	   
+    					)
+						on right click
+						(
+							Edit   	   
+							Delete   	   
+							Duplicate   	   
+							View Record   	   
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								Has_Existing_Loan_With_Bank
+								Loan_Terms_Display
+								Property_Listing_URL
+								Interest_Rate_Offered
+								Applicant_Photo
+								Loan_Amount_Requested
+								Debt_To_Income_Ratio
+								Application_Submitted_On
+								Co_Applicant_Details.Address as "Co_Applicant_Details"
+								Servicing_Branch_Lookup
+								Applicant_Digital_Signature
+								Income_Proof_Upload
+								Loan_Purpose_Voice_Note
+								Property_Video_Walkthrough
+								Property_Video_Walkthrough1 as "Property_Video_Walkthrough"
+								QR_Code as "Application_Tracking_QR_Code"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						)
+				)
+			}
+		}
+		menu
+		{
+			space Space
+			{
+				displayname = "Space"
+				icon = "objects-spaceship"
+
+				section Loan_application
+				{
+					displayname = "Loan application"
+					icon = "business-handout"
+					form  Loan_application
+					{
+						icon = "business-handout"
+					}
+					report Loan_application_Report
+					{
+						icon = "tech-desktop"
+					}
+				}
+				section ZC_App_Preferences
+				{
+					displayname = "App Preferences"
+					icon = "design-app"
+					systemcomponent
+					{
+						type = localization
+						displayname = "Language Selection"
+						icon = "education-language"
+					}
+					systemcomponent
+					{
+						type = connection
+						displayname = "Integrations"
+						icon = "tech-2-connection"
+					}
+				}
+				section ZC_Approvals
+				{
+					displayname = "Approvals"
+					icon = "ui-2-hourglass"
+					systemcomponent
+					{
+						type = approval
+						approval status = pending
+						displayname = "Pending Tasks"
+						icon = "ui-2-hourglass"
+					}
+					systemcomponent
+					{
+						type = approval
+						approval status = completed
+						displayname = "Completed Tasks"
+						icon = "design-todo"
+					}
+				}
+				section SharedAnalytics_Section
+				{
+					type = shared_user_report_section
+					displayname = "Reports"
+					icon = "business-chart-bar-33"
+				}
+			}
+			preference
+			{
+				icon
+				{
+					style = outline
+				}
+			}
+		}
+		customize
+		{
+			font = "lato"
+			color options
+			{
+				color = "11"
+			}
+			logo
+			{
+				preference = "app_icon"
+				placement = "left"
+			}
+		}
+	}
+	phone
+	{
+		forms
+		{
+			form Loan_application
+			{
+				label placement = auto
+			}
+		}
+		customize
+		{
+			layout = twocolumn
+			font = "default"
+			style = "3"
+			color options
+			{
+				color = chryslerpurple
+			}
+			logo
+			{
+				preference = "none"
+			}
+		}
+	}
+	tablet
+	{
+		forms
+		{
+			form Loan_application
+			{
+				label placement = auto
+			}
+		}
+		customize
+		{
+			layout = slidingpane
+			font = "default"
+			style = "3"
+			color options
+			{
+				color = amethyst
+			}
+			logo
+			{
+				preference = "none"
+			}
+		}
+	}
+	translation
+{
+{"Language_Settings":{"LANGAGUE_WITH_LOGIN":"browser"}}
+}
+}
